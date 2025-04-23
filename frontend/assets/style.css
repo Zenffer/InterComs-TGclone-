@@ -59,8 +59,8 @@ header h1 {
 /* Main Layout */
 .main-layout {
   display: flex;
-  margin-top: 60px;
-  height: calc(100vh - 60px);
+  margin-top: 100px;
+  height: calc(100vh - 150px);
 }
 
 /* Sidebar */
@@ -223,4 +223,8 @@ footer {
   .send-button {
     padding: 8px 15px;
   }
+}
+
+.hidden {
+    display: none;
 }

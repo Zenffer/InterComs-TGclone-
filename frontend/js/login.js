@@ -4,13 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const showSignupLink = document.getElementById("show-signup");
     const showLoginLink = document.getElementById("show-login");
 
-    // Toggle between login and signup forms
+    // Show signup form and hide login form
     showSignupLink.addEventListener("click", (e) => {
         e.preventDefault();
         loginForm.classList.add("hidden");
         signupForm.classList.remove("hidden");
     });
 
+    // Show login form and hide signup form
     showLoginLink.addEventListener("click", (e) => {
         e.preventDefault();
         signupForm.classList.add("hidden");
