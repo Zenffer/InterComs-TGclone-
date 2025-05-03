@@ -17,7 +17,7 @@ public class LoginWindow extends JFrame {
 
     public LoginWindow() {
         setTitle("Login");
-        setSize(350, 220);
+        setSize(400, 260);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -30,26 +30,67 @@ public class LoginWindow extends JFrame {
         userCombo = new JComboBox<>();
         refreshUserList();
 
-        usernameField = new JTextField();
-        ipField = new JTextField();
+        usernameField = new JTextField(15);
+        ipField = new JTextField(15);
 
         JButton loginBtn = new JButton("Login");
         JButton createBtn = new JButton("Create Account");
 
         // Layout
-        setLayout(new GridLayout(7, 1, 5, 5));
-        add(new JLabel("Select Existing User:"));
-        add(userCombo);
-        add(new JLabel("Or Create New Account:"));
-        add(new JLabel("Username:"));
-        add(usernameField);
-        add(new JLabel("IP Address:"));
-        add(ipField);
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
 
+        int row = 0;
+
+        // Existing user label
+        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
+        mainPanel.add(new JLabel("Select Existing User:"), gbc);
+
+        // User combo box
+        row++;
+        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
+        mainPanel.add(userCombo, gbc);
+
+        // Separator
+        row++;
+        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
+        JSeparator sep = new JSeparator();
+        sep.setPreferredSize(new Dimension(1, 8));
+        mainPanel.add(sep, gbc);
+
+        // New account label
+        row++;
+        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
+        mainPanel.add(new JLabel("Or Create New Account:"), gbc);
+
+        // Username label and field
+        row++;
+        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 1;
+        mainPanel.add(new JLabel("Username:"), gbc);
+        gbc.gridx = 1;
+        mainPanel.add(usernameField, gbc);
+
+        // IP label and field
+        row++;
+        gbc.gridx = 0; gbc.gridy = row;
+        mainPanel.add(new JLabel("IP Address:"), gbc);
+        gbc.gridx = 1;
+        mainPanel.add(ipField, gbc);
+
+        // Button panel
+        row++;
+        gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
         JPanel btnPanel = new JPanel();
         btnPanel.add(loginBtn);
         btnPanel.add(createBtn);
-        add(btnPanel);
+        mainPanel.add(btnPanel, gbc);
+
+        setContentPane(mainPanel);
 
         // Actions
         loginBtn.addActionListener((ActionEvent e) -> {
