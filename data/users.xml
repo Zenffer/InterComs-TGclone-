@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<users>
+    <user>
+        <username>alice</username>
+        <ip>192.168.1.10</ip>
+    </user>
+    <user>
+        <username>bob</username>
+        <ip>192.168.1.11</ip>
+    </user>
+</users>
