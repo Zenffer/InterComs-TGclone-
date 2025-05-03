@@ -17,7 +17,7 @@ public class LoginWindow extends JFrame {
 
     public LoginWindow() {
         setTitle("Login");
-        setSize(400, 260);
+        setSize(420, 280);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -38,9 +38,9 @@ public class LoginWindow extends JFrame {
 
         // Layout
         JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(18, 18, 18, 18));
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(7, 7, 7, 7);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.WEST;
 
@@ -48,7 +48,9 @@ public class LoginWindow extends JFrame {
 
         // Existing user label
         gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
-        mainPanel.add(new JLabel("Select Existing User:"), gbc);
+        JLabel existingLabel = new JLabel("Select Existing User:");
+        existingLabel.setFont(existingLabel.getFont().deriveFont(Font.BOLD));
+        mainPanel.add(existingLabel, gbc);
 
         // User combo box
         row++;
@@ -59,13 +61,15 @@ public class LoginWindow extends JFrame {
         row++;
         gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
         JSeparator sep = new JSeparator();
-        sep.setPreferredSize(new Dimension(1, 8));
+        sep.setPreferredSize(new Dimension(1, 10));
         mainPanel.add(sep, gbc);
 
         // New account label
         row++;
         gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
-        mainPanel.add(new JLabel("Or Create New Account:"), gbc);
+        JLabel newAccLabel = new JLabel("Or Create New Account:");
+        newAccLabel.setFont(newAccLabel.getFont().deriveFont(Font.BOLD));
+        mainPanel.add(newAccLabel, gbc);
 
         // Username label and field
         row++;
@@ -85,7 +89,7 @@ public class LoginWindow extends JFrame {
         row++;
         gbc.gridx = 0; gbc.gridy = row; gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
-        JPanel btnPanel = new JPanel();
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
         btnPanel.add(loginBtn);
         btnPanel.add(createBtn);
         mainPanel.add(btnPanel, gbc);
