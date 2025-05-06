@@ -1,10 +1,11 @@
 
 package ui;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.swing.*;
 import storage.UserManager;
 import storage.UserManager.User;
 
@@ -126,7 +127,13 @@ public class LoginWindow extends JFrame {
             userManager.addUser(username, ip);
             JOptionPane.showMessageDialog(this, "Account created! Please select it from the list.");
             refreshUserList();
-            userCombo.setSelectedItem(username + " (" + ip + ")");
+            // Select the newly created user
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).username.equals(username)) {
+                    userCombo.setSelectedIndex(i);
+                    break;
+                }
+            }
             usernameField.setText("");
             ipField.setText("");
         });
@@ -142,12 +149,21 @@ public class LoginWindow extends JFrame {
                 userCombo.addItem(u.username + " (" + u.ip + ")");
             }
         }
-        userCombo.setSelectedIndex(-1);
+        if (users != null && !users.isEmpty()) {
+            userCombo.setSelectedIndex(0);
+        } else {
+            userCombo.setSelectedIndex(-1);
+        }
     }
 
     private void openChat(String username, String ip) {
         try {
-            new ChatWindow(username, ip);
+            // Prepare contacts list (all users except the current one)
+            List<String> contacts = users.stream()
+                    .filter(u -> !u.username.equals(username))
+                    .map(u -> u.username)
+                    .collect(Collectors.toList());
+            new ChatWindow(username, contacts);
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Failed to open chat window: " + e.getMessage());

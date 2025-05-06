@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<conversation>
+                    
+    
+    
+    
+    <message sender="alice" timestamp="2025-05-05 10:31:03">hi</message>
+                
+    
+    
+    
+    <message sender="alice" timestamp="2025-05-05 10:34:19">how are you?</message>
+            
+    
+    
+    <message sender="minerva" timestamp="2025-05-05 10:34:37">im fine</message>
+        
+    
+    <message sender="minerva" timestamp="2025-05-05 10:36:45">how about you?</message>
+    
+    <message sender="alice" timestamp="2025-05-05 10:36:59">also fine</message>
+</conversation>

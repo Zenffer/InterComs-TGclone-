@@ -1,6 +1,7 @@
+/ui/
+/util/
 /main/
 /model/
 /network/
 /storage/
-/ui/
-/util/
+/Main.class
