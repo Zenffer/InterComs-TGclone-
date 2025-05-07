@@ -39,7 +39,6 @@ public class ChatScreen extends JFrame {
     private final JList<String> userList;
     private final JTextField messageField;
     private final JButton sendButton;
-    private final JButton fileButton;
     private final JButton logoutButton;
     private final ActiveMQHandler activeMQHandler;
     private static final int PORT = 61616;
@@ -75,7 +74,6 @@ public class ChatScreen extends JFrame {
         messageField.setCaretColor(PRIMARY_COLOR);
         
         sendButton = createStyledButton("Send");
-        fileButton = createStyledButton("File");
         logoutButton = createStyledButton("Logout");
         
         // Initialize ActiveMQ
@@ -155,20 +153,21 @@ public class ChatScreen extends JFrame {
         mainPanel.setBackground(PRIMARY_COLOR);
         mainPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-        // Top panel for logout button
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        // Top panel for Contacts label and logout button
+        JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBackground(PRIMARY_COLOR);
-        topPanel.add(logoutButton);
+        
+        JLabel userListLabel = new JLabel("Contacts");
+        userListLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
+        userListLabel.setForeground(SECONDARY_COLOR);
+        userListLabel.setBorder(new EmptyBorder(0, 0, 0, 0));
+        topPanel.add(userListLabel, BorderLayout.WEST);
+        topPanel.add(logoutButton, BorderLayout.EAST);
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
         // User list panel (now on the left)
         JPanel userListPanel = new JPanel(new BorderLayout());
         userListPanel.setBackground(PRIMARY_COLOR);
-        JLabel userListLabel = new JLabel("Contacts");
-        userListLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
-        userListLabel.setForeground(SECONDARY_COLOR);
-        userListLabel.setBorder(new EmptyBorder(0, 0, 10, 0));
-        userListPanel.add(userListLabel, BorderLayout.NORTH);
         
         JScrollPane userScrollPane = new JScrollPane(userList);
         userScrollPane.setPreferredSize(new Dimension(200, 0));
@@ -188,7 +187,6 @@ public class ChatScreen extends JFrame {
         
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
         buttonPanel.setBackground(PRIMARY_COLOR);
-        buttonPanel.add(fileButton);
         buttonPanel.add(sendButton);
         bottomPanel.add(buttonPanel, BorderLayout.EAST);
         
@@ -204,9 +202,6 @@ public class ChatScreen extends JFrame {
         
         // Send button click
         sendButton.addActionListener(e -> sendMessage());
-        
-        // File button click
-        fileButton.addActionListener(e -> handleFileSend());
         
         // Logout button click
         logoutButton.addActionListener(e -> handleLogout());
@@ -240,33 +235,6 @@ public class ChatScreen extends JFrame {
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Please select a user to send message to");
-            }
-        }
-    }
-
-    private void handleFileSend() {
-        String selectedUser = userList.getSelectedValue();
-        if (selectedUser == null) {
-            JOptionPane.showMessageDialog(this, "Please select a user to send file to");
-            return;
-        }
-
-        JFileChooser fileChooser = new JFileChooser();
-        int result = fileChooser.showOpenDialog(this);
-        
-        if (result == JFileChooser.APPROVE_OPTION) {
-            try {
-                // Send file notification
-                String queueName = "queue." + selectedUser;
-                String message = "FILE:" + fileChooser.getSelectedFile().getName();
-                activeMQHandler.sendMessage(queueName, message);
-                
-                // Update chat area
-                chatArea.append("Sending file to " + selectedUser + ": " + 
-                              fileChooser.getSelectedFile().getName() + "\n");
-            } catch (JMSException e) {
-                JOptionPane.showMessageDialog(this, "Error sending file: " + e.getMessage());
-                e.printStackTrace();
             }
         }
     }

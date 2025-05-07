@@ -100,4 +100,24 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - Inspired by Telegram's user interface
 - Built with Java Swing for the GUI
-- Uses Java Sockets for P2P communication 
+- Uses Java Sockets for P2P communication
+
+## How to Reopen/Start ActiveMQ
+
+1. Open Command Prompt (Windows) or Terminal (Linux/Mac).
+2. Navigate to your ActiveMQ installation directory, for example:
+   ```
+   cd C:\apache-activemq\bin
+   ```
+3. Start ActiveMQ with:
+   - On Linux/Mac:
+     ```
+     ./activemq start
+     ```
+   - On Windows:
+     ```
+     activemq.bat start
+     ```
+4. Access the admin console at:
+   [http://localhost:8161/admin](http://localhost:8161/admin)
+   - Default username/password: `admin` / `admin` 
