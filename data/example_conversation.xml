@@ -1,5 +1,0 @@
-<conversation>
-    <message sender="alice" timestamp="2024-06-10 14:23:01">Hi Bob!</message>
-    <message sender="bob" timestamp="2024-06-10 14:23:10">Hello Alice!</message>
-    <message sender="alice" timestamp="2024-06-10 14:24:00">How are you?</message>
-</conversation>
