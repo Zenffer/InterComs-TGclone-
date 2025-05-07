@@ -1,12 +1,11 @@
 package com.intercom.ui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.net.InetAddress;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,9 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import com.intercom.storage.UserManager;
-import com.intercom.ui.ChatScreen;
 
 public class LoginScreen extends JFrame {
     private final UserManager userManager;
@@ -26,6 +25,11 @@ public class LoginScreen extends JFrame {
     private JButton loginButton;
     private JButton createAccountButton;
     private JComboBox<String> userComboBox;
+    
+    // Color constants
+    private static final Color PRIMARY_COLOR = new Color(44, 62, 80); // #2c3e50
+    private static final Color SECONDARY_COLOR = new Color(236, 240, 241); // #ecf0f1
+    private static final Color ACCENT_COLOR = new Color(52, 152, 219); // #3498db
 
     public LoginScreen() {
         userManager = UserManager.getInstance();
@@ -35,52 +39,99 @@ public class LoginScreen extends JFrame {
     private void initializeUI() {
         setTitle("InterCom Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
+        setSize(400, 400);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        // Set the background color for the frame
+        getContentPane().setBackground(PRIMARY_COLOR);
 
         // Main panel with padding
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        mainPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
+        mainPanel.setBackground(PRIMARY_COLOR);
 
         // Title
         JLabel titleLabel = new JLabel("Welcome to InterCom");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        titleLabel.setForeground(SECONDARY_COLOR);
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(titleLabel);
-        mainPanel.add(Box.createVerticalStrut(20));
+        mainPanel.add(Box.createVerticalStrut(30));
 
         // Username field
         usernameField = new JTextField(20);
-        usernameField.setMaximumSize(new Dimension(300, 30));
+        usernameField.setMaximumSize(new Dimension(300, 35));
         usernameField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        usernameField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        usernameField.setBackground(SECONDARY_COLOR);
+        usernameField.setForeground(PRIMARY_COLOR);
+        usernameField.setCaretColor(PRIMARY_COLOR);
         mainPanel.add(usernameField);
-        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(Box.createVerticalStrut(15));
 
         // Existing users dropdown
         userComboBox = new JComboBox<>();
-        userComboBox.setMaximumSize(new Dimension(300, 30));
+        userComboBox.setMaximumSize(new Dimension(300, 35));
         userComboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        userComboBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        userComboBox.setBackground(SECONDARY_COLOR);
+        userComboBox.setForeground(PRIMARY_COLOR);
         updateUserList();
         mainPanel.add(userComboBox);
-        mainPanel.add(Box.createVerticalStrut(10));
+        mainPanel.add(Box.createVerticalStrut(25));
 
         // Buttons panel
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setBackground(PRIMARY_COLOR);
 
-        loginButton = new JButton("Login");
-        createAccountButton = new JButton("Create Account");
+        loginButton = createStyledButton("Login");
+        createAccountButton = createStyledButton("Create Account");
 
         loginButton.addActionListener(e -> handleLogin());
         createAccountButton.addActionListener(e -> handleCreateAccount());
 
+        loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        createAccountButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Make both buttons the same size
+        Dimension buttonSize = new Dimension(180, 35);
+        loginButton.setMaximumSize(buttonSize);
+        loginButton.setPreferredSize(buttonSize);
+        createAccountButton.setMaximumSize(buttonSize);
+        createAccountButton.setPreferredSize(buttonSize);
+
         buttonPanel.add(loginButton);
+        buttonPanel.add(Box.createVerticalStrut(10));
         buttonPanel.add(createAccountButton);
         mainPanel.add(buttonPanel);
 
         add(mainPanel);
+    }
+
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        button.setBackground(ACCENT_COLOR);
+        button.setForeground(SECONDARY_COLOR);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setPreferredSize(new Dimension(120, 35));
+        
+        // Add hover effect
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(ACCENT_COLOR.darker());
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(ACCENT_COLOR);
+            }
+        });
+        
+        return button;
     }
 
     private void updateUserList() {
