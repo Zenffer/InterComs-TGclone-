@@ -16,11 +16,6 @@ A lightweight, Java-based peer-to-peer (P2P) messaging application designed for 
   - Real-time text messaging
   - No internet required
 
-- **File Sharing**
-  - Send and receive small files (doc, PDF, images)
-  - Max file size: 15MB
-  - Basic file I/O, no media preview
-
 - **XML-Based Storage**
   - `users.xml` for user info (ID, username, IP)
   - `messages.xml` for storing chat logs (optional)
