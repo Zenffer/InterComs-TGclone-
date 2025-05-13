@@ -1,23 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <users>
-        
+          
+  
   
   <!-- Users will be added here dynamically -->
+      
+  
+  
+  <user>
+            
+    
+    <id>001</id>
+            
+    
+    <username>kev</username>
+            
+    
+    <ip>192.168.56.1</ip>
+          
+  
+  </user>
     
   
   <user>
         
-    <id>001</id>
+    <id>002</id>
         
-    <username>kev</username>
+    <username>ben</username>
         
     <ip>192.168.56.1</ip>
       
   </user>
   
   <user>
-    <id>002</id>
-    <username>ben</username>
+    <id>003</id>
+    <username>mike</username>
     <ip>192.168.56.1</ip>
   </user>
 </users>
