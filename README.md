@@ -114,4 +114,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
      ```
 4. Access the admin console at:
    [http://localhost:8161/admin](http://localhost:8161/admin)
-   - Default username/password: `admin` / `admin`
+   - Default username/password: `admin` / `admin` 
