@@ -1,4 +1,4 @@
-package com.intercom.net;
+package net;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

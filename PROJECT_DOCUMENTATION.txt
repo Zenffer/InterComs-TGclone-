@@ -1,0 +1,105 @@
+InterComs Project Documentation
+=============================
+
+Project Overview
+---------------
+InterComs is a Java-based messaging application that implements a Telegram-like chat system. The project uses Maven for dependency management and follows a client-server architecture.
+
+File Structure
+-------------
+src/
+├── main/
+│   ├── java/
+│   │   ├── App.java                    # Main application entry point
+│   │   ├── ui/                         # User Interface components
+│   │   │   ├── ChatScreen.java        # Main chat interface
+│   │   │   └── LoginScreen.java       # User authentication interface
+│   │   ├── messaging/                  # Messaging system components
+│   │   │   └── ActiveMQHandler.java   # ActiveMQ message broker handler
+│   │   ├── storage/                    # Data persistence components
+│   │   │   ├── UserManager.java       # User data management
+│   │   │   └── XPathUtils.java        # XML data handling utilities
+│   │   └── net/                        # Network communication
+│   │       ├── Client.java            # Client-side networking
+│   │       └── Server.java            # Server-side networking
+│   └── resources/
+│       └── data/                       # Data storage directory
+└── test/                               # Test directory (structure not shown)
+
+Component Details
+----------------
+
+1. Core Application
+   - App.java
+     * Main entry point of the application
+     * Initializes the application and manages the main window
+     * Handles application lifecycle
+
+2. User Interface (ui/)
+   - ChatScreen.java
+     * Implements the main chat interface
+     * Handles message display and user input
+     * Manages chat interactions and message history
+     * Size: ~9.9KB, 272 lines
+
+   - LoginScreen.java
+     * Handles user authentication
+     * Manages login form and validation
+     * Processes user credentials
+     * Size: ~6.8KB, 188 lines
+
+3. Messaging System (messaging/)
+   - ActiveMQHandler.java
+     * Manages message broker communication
+     * Handles message queuing and delivery
+     * Implements message routing
+     * Size: ~2.0KB, 56 lines
+
+4. Data Storage (storage/)
+   - UserManager.java
+     * Manages user data and profiles
+     * Handles user authentication
+     * Maintains user session information
+     * Size: ~4.8KB, 138 lines
+
+   - XPathUtils.java
+     * Utility class for XML data handling
+     * Provides XPath query functionality
+     * Manages data persistence
+     * Size: ~1.9KB, 51 lines
+
+5. Network Communication (net/)
+   - Client.java
+     * Implements client-side networking
+     * Handles connection to server
+     * Manages client-server communication
+     * Size: ~2.8KB, 84 lines
+
+   - Server.java
+     * Implements server-side networking
+     * Manages client connections
+     * Handles server operations
+     * Size: ~2.6KB, 87 lines
+
+6. Resources
+   - data/
+     * Directory for storing application data
+     * Contains XML files for user data and messages
+     * Currently empty, used for runtime data storage
+
+Technical Stack
+--------------
+- Language: Java
+- Build Tool: Maven
+- Message Broker: ActiveMQ
+- Data Storage: XML-based
+- Network Protocol: Custom TCP/IP implementation
+
+Dependencies
+-----------
+- ActiveMQ for message queuing
+- XML processing libraries
+- Java Swing for UI components
+- Standard Java networking libraries
+
+Note: This documentation reflects the current state of the project as of the last update. The file sizes and line counts are approximate and may vary with future updates. 

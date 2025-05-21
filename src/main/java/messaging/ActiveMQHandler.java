@@ -1,17 +1,16 @@
-package com.intercom.messaging;
+package messaging;
+
+import org.apache.activemq.ActiveMQConnectionFactory;
 
 import jakarta.jms.Connection;
 import jakarta.jms.ConnectionFactory;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;
-import jakarta.jms.Message;
 import jakarta.jms.MessageConsumer;
 import jakarta.jms.MessageListener;
 import jakarta.jms.MessageProducer;
 import jakarta.jms.Session;
 import jakarta.jms.TextMessage;
-
-import org.apache.activemq.ActiveMQConnectionFactory;
 
 public class ActiveMQHandler {
     private static final String BROKER_URL = "tcp://localhost:61616";

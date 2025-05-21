@@ -1,4 +1,4 @@
-package com.intercom.ui;
+package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,9 +29,9 @@ import jakarta.jms.Message;
 import jakarta.jms.MessageListener;
 import jakarta.jms.TextMessage;
 
-import com.intercom.messaging.ActiveMQHandler;
-import com.intercom.storage.UserManager;
-import com.intercom.storage.UserManager.User;
+import messaging.ActiveMQHandler;
+import storage.UserManager;
+import storage.UserManager.User;
 
 public class ChatScreen extends JFrame {
     private final User currentUser;

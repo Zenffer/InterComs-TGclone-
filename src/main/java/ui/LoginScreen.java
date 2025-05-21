@@ -1,4 +1,4 @@
-package com.intercom.ui;
+package ui;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import com.intercom.storage.UserManager;
+import storage.UserManager;
 
 public class LoginScreen extends JFrame {
     private final UserManager userManager;

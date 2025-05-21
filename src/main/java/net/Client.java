@@ -1,4 +1,4 @@
-package com.intercom.net;
+package net;
 
 import java.io.DataOutputStream;
 import java.io.File;

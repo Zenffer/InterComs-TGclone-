@@ -1,9 +1,8 @@
-package com.intercom;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import com.intercom.ui.LoginScreen;
+import ui.LoginScreen;
 
 public class App {
     public static void main(String[] args) {
