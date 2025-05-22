@@ -1,3 +1,8 @@
+/**
+ * UserManager class manages user data persistence using XML storage.
+ * Implements the Singleton pattern to ensure a single instance manages user data.
+ * Handles user creation, retrieval, and storage operations.
+ */
 package storage;
 
 import java.io.File;
@@ -17,10 +22,19 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 public class UserManager {
+    /** Path to the XML file storing user data */
     private static final String USERS_XML_PATH = "src/main/resources/data/users.xml";
+    
+    /** XML document containing user data */
     private Document document;
+    
+    /** Singleton instance of UserManager */
     private static UserManager instance;
 
+    /**
+     * Private constructor to enforce singleton pattern.
+     * Initializes the XML document on creation.
+     */
     private UserManager() {
         try {
             loadDocument();
@@ -29,6 +43,12 @@ public class UserManager {
         }
     }
 
+    /**
+     * Gets the singleton instance of UserManager.
+     * Creates a new instance if one doesn't exist.
+     * 
+     * @return The singleton UserManager instance
+     */
     public static synchronized UserManager getInstance() {
         if (instance == null) {
             instance = new UserManager();
@@ -36,6 +56,11 @@ public class UserManager {
         return instance;
     }
 
+    /**
+     * Loads the XML document from file or creates a new one if it doesn't exist.
+     * 
+     * @throws Exception if there's an error loading or creating the document
+     */
     private void loadDocument() throws Exception {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -51,6 +76,11 @@ public class UserManager {
         }
     }
 
+    /**
+     * Saves the current XML document to file with proper formatting.
+     * 
+     * @throws Exception if there's an error saving the document
+     */
     private void saveDocument() throws Exception {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
@@ -62,6 +92,14 @@ public class UserManager {
         transformer.transform(source, result);
     }
 
+    /**
+     * Adds a new user to the XML storage.
+     * Creates a new user element with ID, username, and IP address.
+     * 
+     * @param username The username of the new user
+     * @param ip The IP address of the new user
+     * @throws Exception if there's an error adding the user or saving the document
+     */
     public void addUser(String username, String ip) throws Exception {
         Element user = document.createElement("user");
         
@@ -82,11 +120,22 @@ public class UserManager {
         saveDocument();
     }
 
+    /**
+     * Generates a unique user ID based on the current number of users.
+     * IDs are formatted as three-digit numbers (e.g., "001", "002").
+     * 
+     * @return A new unique user ID
+     */
     private String generateUserId() {
         NodeList users = document.getElementsByTagName("user");
         return String.format("%03d", users.getLength() + 1);
     }
 
+    /**
+     * Retrieves all users from the XML storage.
+     * 
+     * @return A list of all User objects
+     */
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         NodeList userNodes = document.getElementsByTagName("user");
@@ -103,6 +152,12 @@ public class UserManager {
         return users;
     }
 
+    /**
+     * Finds a user by their username.
+     * 
+     * @param username The username to search for
+     * @return The User object if found, null otherwise
+     */
     public User findUserByUsername(String username) {
         NodeList users = document.getElementsByTagName("user");
         
@@ -120,19 +175,40 @@ public class UserManager {
         return null;
     }
 
+    /**
+     * Inner class representing a user in the system.
+     * Contains user ID, username, and IP address.
+     */
     public static class User {
+        /** Unique identifier for the user */
         private final String id;
+        
+        /** Username of the user */
         private final String username;
+        
+        /** IP address of the user */
         private final String ip;
 
+        /**
+         * Constructs a new User object.
+         * 
+         * @param id The user's unique identifier
+         * @param username The user's username
+         * @param ip The user's IP address
+         */
         public User(String id, String username, String ip) {
             this.id = id;
             this.username = username;
             this.ip = ip;
         }
 
+        /** @return The user's unique identifier */
         public String getId() { return id; }
+        
+        /** @return The user's username */
         public String getUsername() { return username; }
+        
+        /** @return The user's IP address */
         public String getIp() { return ip; }
     }
 }

@@ -1,3 +1,8 @@
+/**
+ * ChatScreen class represents the main chat interface of the InterCom application.
+ * It provides real-time messaging functionality using ActiveMQ for message handling.
+ * The UI includes a chat area, user list, and message input components.
+ */
 package ui;
 
 import java.awt.BorderLayout;
@@ -34,20 +39,33 @@ import storage.UserManager;
 import storage.UserManager.User;
 
 public class ChatScreen extends JFrame {
+    /** Current user of the chat session */
     private final User currentUser;
+    
+    /** UI Components */
     private final JTextArea chatArea;
     private final JList<String> userList;
     private final JTextField messageField;
     private final JButton sendButton;
     private final JButton logoutButton;
+    
+    /** Message broker handler for real-time communication */
     private final ActiveMQHandler activeMQHandler;
+    
+    /** ActiveMQ broker port */
     private static final int PORT = 61616;
 
-    // Color constants
-    private static final Color PRIMARY_COLOR = new Color(44, 62, 80); // #2c3e50
-    private static final Color SECONDARY_COLOR = new Color(236, 240, 241); // #ecf0f1
-    private static final Color ACCENT_COLOR = new Color(52, 152, 219); // #3498db
+    /** UI Color scheme constants */
+    private static final Color PRIMARY_COLOR = new Color(44, 62, 80); // #2c3e50 - Dark blue-gray
+    private static final Color SECONDARY_COLOR = new Color(236, 240, 241); // #ecf0f1 - Light gray
+    private static final Color ACCENT_COLOR = new Color(52, 152, 219); // #3498db - Bright blue
 
+    /**
+     * Constructs a new ChatScreen for the specified user.
+     * Initializes UI components and sets up ActiveMQ connection.
+     * 
+     * @param user The user to create the chat screen for
+     */
     public ChatScreen(User user) {
         this.currentUser = user;
         
@@ -90,6 +108,12 @@ public class ChatScreen extends JFrame {
         setupEventHandlers();
     }
 
+    /**
+     * Creates a styled button with hover effects and consistent appearance.
+     * 
+     * @param text The text to display on the button
+     * @return A styled JButton instance
+     */
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Helvetica", Font.BOLD, 14));
@@ -112,6 +136,13 @@ public class ChatScreen extends JFrame {
         return button;
     }
 
+    /**
+     * Sets up ActiveMQ connection and message handling.
+     * Creates private queue for the user and broadcast topic.
+     * Configures message listener for incoming messages.
+     * 
+     * @throws JMSException if there's an error in the JMS setup
+     */
     private void setupActiveMQ() throws JMSException {
         // Create a queue for private messages
         String privateQueue = "queue." + currentUser.getUsername();
@@ -139,6 +170,10 @@ public class ChatScreen extends JFrame {
         });
     }
 
+    /**
+     * Initializes and sets up the main UI components of the chat screen.
+     * Creates a layout with user list, chat area, and message input.
+     */
     private void initializeUI() {
         setTitle("InterCom - " + currentUser.getUsername());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -196,6 +231,10 @@ public class ChatScreen extends JFrame {
         updateUserList();
     }
 
+    /**
+     * Sets up event handlers for user interactions.
+     * Configures actions for message sending, logout, and window closing.
+     */
     private void setupEventHandlers() {
         // Send message on Enter key
         messageField.addActionListener(e -> sendMessage());
@@ -215,6 +254,10 @@ public class ChatScreen extends JFrame {
         });
     }
 
+    /**
+     * Handles sending messages to selected users.
+     * Sends private messages through ActiveMQ and updates the chat display.
+     */
     private void sendMessage() {
         String message = messageField.getText().trim();
         if (!message.isEmpty()) {
@@ -239,6 +282,10 @@ public class ChatScreen extends JFrame {
         }
     }
 
+    /**
+     * Handles user logout.
+     * Cleans up resources and returns to the login screen.
+     */
     private void handleLogout() {
         cleanup();
         this.dispose();
@@ -247,6 +294,10 @@ public class ChatScreen extends JFrame {
         });
     }
 
+    /**
+     * Updates the list of available users in the chat interface.
+     * Called when the user list changes.
+     */
     private void updateUserList() {
         List<User> users = UserManager.getInstance().getAllUsers();
         DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -260,6 +311,10 @@ public class ChatScreen extends JFrame {
         userList.setModel(listModel);
     }
 
+    /**
+     * Cleans up resources when closing the chat screen.
+     * Closes ActiveMQ connection and performs necessary cleanup.
+     */
     private void cleanup() {
         try {
             if (activeMQHandler != null) {

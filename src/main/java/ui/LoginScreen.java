@@ -1,3 +1,8 @@
+/**
+ * LoginScreen class represents the main login interface for the InterCom application.
+ * It provides functionality for both logging in with existing accounts and creating new ones.
+ * The UI is built using Swing components with a modern, clean design.
+ */
 package ui;
 
 import java.awt.Color;
@@ -20,22 +25,33 @@ import javax.swing.border.EmptyBorder;
 import storage.UserManager;
 
 public class LoginScreen extends JFrame {
+    /** User manager instance for handling user operations */
     private final UserManager userManager;
+    
+    /** UI Components */
     private JTextField usernameField;
     private JButton loginButton;
     private JButton createAccountButton;
     private JComboBox<String> userComboBox;
     
-    // Color constants
-    private static final Color PRIMARY_COLOR = new Color(44, 62, 80); // #2c3e50
-    private static final Color SECONDARY_COLOR = new Color(236, 240, 241); // #ecf0f1
-    private static final Color ACCENT_COLOR = new Color(52, 152, 219); // #3498db
+    /** UI Color scheme constants */
+    private static final Color PRIMARY_COLOR = new Color(44, 62, 80); // #2c3e50 - Dark blue-gray
+    private static final Color SECONDARY_COLOR = new Color(236, 240, 241); // #ecf0f1 - Light gray
+    private static final Color ACCENT_COLOR = new Color(52, 152, 219); // #3498db - Bright blue
 
+    /**
+     * Constructs a new LoginScreen and initializes the user interface.
+     * Uses the singleton instance of UserManager for user operations.
+     */
     public LoginScreen() {
         userManager = UserManager.getInstance();
         initializeUI();
     }
 
+    /**
+     * Initializes and sets up the main UI components of the login screen.
+     * Creates a vertically stacked layout with title, input fields, and buttons.
+     */
     private void initializeUI() {
         setTitle("InterCom Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,6 +127,12 @@ public class LoginScreen extends JFrame {
         add(mainPanel);
     }
 
+    /**
+     * Creates a styled button with hover effects and consistent appearance.
+     * 
+     * @param text The text to display on the button
+     * @return A styled JButton instance
+     */
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -134,6 +156,10 @@ public class LoginScreen extends JFrame {
         return button;
     }
 
+    /**
+     * Updates the dropdown list of existing users.
+     * Called when the user list changes (e.g., after creating a new account).
+     */
     private void updateUserList() {
         userComboBox.removeAllItems();
         userComboBox.addItem("Select existing user...");
@@ -142,6 +168,10 @@ public class LoginScreen extends JFrame {
         }
     }
 
+    /**
+     * Handles the login button click event.
+     * Validates user selection and opens the chat screen if successful.
+     */
     private void handleLogin() {
         String selectedUser = (String) userComboBox.getSelectedItem();
         if (selectedUser == null || selectedUser.equals("Select existing user...")) {
@@ -155,6 +185,11 @@ public class LoginScreen extends JFrame {
         }
     }
 
+    /**
+     * Handles the create account button click event.
+     * Validates the username and creates a new user account if valid.
+     * Automatically logs in the new user after account creation.
+     */
     private void handleCreateAccount() {
         String username = usernameField.getText().trim();
         if (username.isEmpty()) {
@@ -180,6 +215,11 @@ public class LoginScreen extends JFrame {
         }
     }
 
+    /**
+     * Opens the chat screen for the specified user and closes the login screen.
+     * 
+     * @param user The user to open the chat screen for
+     */
     private void openChatScreen(UserManager.User user) {
         ChatScreen chatScreen = new ChatScreen(user);
         chatScreen.setVisible(true);
